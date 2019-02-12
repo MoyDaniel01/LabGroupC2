@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -llibc.a -l"C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" -l"C:/Users/arago/Downloads/Util/Util/Debug/Util2.lib"
+LIBS := -llibc.a -l"C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" -l"C:/Users/mreyes43/Documents/GitHub/LabGroupC2/Util/Debug/Util2.lib"
 

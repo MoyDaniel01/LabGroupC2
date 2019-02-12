@@ -1,1 +1,1 @@
-"./main(1).obj" "./seg7.obj" "./tm4c123gh6pm_startup_ccs.obj" "../tm4c123gh6pm.cmd" -llibc.a -l"C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" -l"C:/Users/arago/Downloads/Util/Util/Debug/Util2.lib" 
+"./main(1).obj" "./seg7.obj" "./tm4c123gh6pm_startup_ccs.obj" "../tm4c123gh6pm.cmd" -llibc.a -l"C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" -l"C:/Users/mreyes43/Documents/GitHub/LabGroupC2/Util/Debug/Util2.lib" 
