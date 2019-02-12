@@ -13,11 +13,12 @@ ORDERED_OBJS += \
 "./main.obj" \
 "./seg7.obj" \
 "./sig7digit.obj" \
+"./sw-increment.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
+-l"C:/Users/arago/OneDrive/Documents/GitHub/LabGroupC2/Util/Debug/Util2.lib" \
 -llibc.a \
--l"C:/Users/arago/Downloads/Util/Util/Debug/Util2.lib" \
 -l"C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" \
 
 -include ../makefile.init
@@ -159,9 +160,9 @@ Lab3.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "seg7.obj" "sig7digit.obj" "tm4c123gh6pm_startup_ccs.obj" 
+	-$(RM) "main.obj" "seg7.obj" "sig7digit.obj" "sw-increment.obj" "tm4c123gh6pm_startup_ccs.obj" 
 	-$(RM) "main.d" "seg7.d" "tm4c123gh6pm_startup_ccs.d" 
-	-$(RM) "sig7digit.d" 
+	-$(RM) "sig7digit.d" "sw-increment.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

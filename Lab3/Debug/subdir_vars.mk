@@ -9,7 +9,8 @@ CMD_SRCS += \
 ../tm4c123gh6pm.cmd 
 
 ASM_SRCS += \
-../sig7digit.asm 
+../sig7digit.asm \
+../sw-increment.asm 
 
 C_SRCS += \
 ../main.c \
@@ -25,15 +26,18 @@ OBJS += \
 ./main.obj \
 ./seg7.obj \
 ./sig7digit.obj \
+./sw-increment.obj \
 ./tm4c123gh6pm_startup_ccs.obj 
 
 ASM_DEPS += \
-./sig7digit.d 
+./sig7digit.d \
+./sw-increment.d 
 
 OBJS__QUOTED += \
 "main.obj" \
 "seg7.obj" \
 "sig7digit.obj" \
+"sw-increment.obj" \
 "tm4c123gh6pm_startup_ccs.obj" 
 
 C_DEPS__QUOTED += \
@@ -42,7 +46,8 @@ C_DEPS__QUOTED += \
 "tm4c123gh6pm_startup_ccs.d" 
 
 ASM_DEPS__QUOTED += \
-"sig7digit.d" 
+"sig7digit.d" \
+"sw-increment.d" 
 
 C_SRCS__QUOTED += \
 "../main.c" \
@@ -50,6 +55,7 @@ C_SRCS__QUOTED += \
 "../tm4c123gh6pm_startup_ccs.c" 
 
 ASM_SRCS__QUOTED += \
-"../sig7digit.asm" 
+"../sig7digit.asm" \
+"../sw-increment.asm" 
 
 
