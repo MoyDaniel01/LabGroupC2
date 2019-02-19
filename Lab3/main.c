@@ -15,6 +15,8 @@
 // Stop watch increment function, written in assembly
 extern void
 stopWatchIncrement(seg7Display_t* seg7Display);
+extern void
+stopWatchReset(seg7Display_t* seg7Display);
 
 // The running state of the stopwatch system
 enum {
@@ -35,8 +37,10 @@ stopWatchUpdate(uint32_t time)                          // The scheduled time
         stopWatchIncrement(&seg7Display);
     }
 
+if (sysState == Reset){
+stopWatchReset(&seg7Display);
+}
     seg7DigitUpdate(&seg7Display);
-
     // Call back after 10 milliseconds
     schdCallback(stopWatchUpdate, time + 10);
 }
@@ -51,19 +55,23 @@ checkPushButton(uint32_t time)
 
     switch (code) {
     case 1:                         // SW1 is the Reset button, only when the stopwatch is paused
+        if (sysState == Pause) {
+          sysState = Reset;
 
-        //
-        // YOUR CODE
-        //
-
+        }
         delay = 250;                // software debouncing
         break;
 
-    case 2:                         // SW2 is the Start/Pause/Resume button
-
-        //
-        // YOUR CODE
-        //
+    case 2:               // SW2 is the Start/Pause/Resume buttonsysState = (sysState + 1);
+       if (sysState == Run){
+           sysState = Pause;
+       }
+       else if (sysState == Pause){
+           sysState = Run;
+       }
+       else if (sysState== Reset){
+           sysState = Run;
+       }
 
         delay = 250;                // software debouncing
         break;
