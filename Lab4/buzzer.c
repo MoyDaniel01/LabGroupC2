@@ -13,6 +13,7 @@
 #include <driverlib/sysctl.h>
 #include <driverlib/gpio.h>
 #include "buzzer.h"
+#include "motion.h"
 
 // Pin usage: Grove base port J17, Tiva C PC5 (Port C, Pin 5)
 #define BUZZER_PERIPH   SYSCTL_PERIPH_GPIOC
