@@ -13,7 +13,6 @@ motion.obj: C:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h
 motion.obj: C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pin_map.h
 motion.obj: C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/sysctl.h
 motion.obj: C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h
-motion.obj: ../buzzer.h
 motion.obj: ../motion.h
 
 ../motion.c: 
@@ -29,5 +28,4 @@ C:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h:
 C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/sysctl.h: 
 C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h: 
-../buzzer.h: 
 ../motion.h: 

@@ -14,9 +14,6 @@
 void motionInit();
 
 // Turn on the buzzer
-void motionOn();
-
-// Turn off the buzzer
-void motionOff();
+bool motionDetect();
 
 #endif /* MOTION_H_ */

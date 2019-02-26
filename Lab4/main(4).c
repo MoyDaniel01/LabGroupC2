@@ -12,6 +12,9 @@
 #include "buzzer.h"
 #include "motion.h"
 
+bool motion;
+
+
 // ON/Off state type
 typedef enum {On, Off} OnOff_t;
 
@@ -50,7 +53,7 @@ void callbackBuzzerPlay(uint32_t time)                    // the scheduled time
         case Off:
             buzzerOn();
             buzzerState = On;
-            delay = 12;                            // on for 12 ms
+            delay = 200;                            // on for 12 ms
             break;
         }
     }
@@ -74,7 +77,7 @@ void callbackCheckPushButton(uint32_t time)
     {
     case 1:                     // SW1: Turn on the system and the alarm
         sysState = On;
-        alarmState = On;
+        alarmState = Off;
         ledTurnOnOff(true /* red */, false /* blue */, false /* green */);
         delay = 250;
         break;
@@ -97,6 +100,30 @@ void callbackCheckPushButton(uint32_t time)
  * Task 3: YOUR CODE, check the PIR motion sensor
  */
 
+void callbackCheckMotion(uint32_t time){
+    uint32_t delay = 10;
+    if (sysState==On){
+
+
+
+    if (motionDetect()){
+        alarmState = On;
+        uprintf("Motion Detected\n");
+        ledTurnOnOff(true /* red */, false /* blue */, false /* green */);
+        delay=200;
+    }
+    else{
+        alarmState = Off;
+        uprintf("Motion Not Detected\n");
+        ledTurnOnOff(false /* red */, false /* blue */, true /* green */);
+        delay=200;
+    }
+    }
+
+    schdCallback(callbackCheckMotion,time+delay);
+}
+
+
 
 
 
@@ -107,6 +134,7 @@ int main(void)
 {
     lpInit();
     buzzerInit();
+    motionInit();
 
     // Print out a start message
     uprintf("%s\n\r", "Lab 4 starts");
@@ -114,10 +142,11 @@ int main(void)
     // Schedule the first callback events
     schdCallback(callbackBuzzerPlay, 1000);
     schdCallback(callbackCheckPushButton, 1002);
+    schdCallback(callbackCheckMotion, 1004);
 
     // Turn on the green sub-LED
     ledTurnOnOff(false /* red */, false /* blue */, true /* green */);
-
+    sysState = Off;
     // Run the callback scheduler
     while (true)
     {
