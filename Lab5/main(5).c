@@ -12,7 +12,11 @@
 #include <driverlib/interrupt.h>
 #include "launchpad.h"
 #include "buzzer.h"
-//#include "motion.h"
+#include "motion.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 
 // ON/Off state type
 typedef enum {On, Off} OnOff_t;
@@ -25,12 +29,13 @@ volatile static OnOff_t alarmState = Off;
 
 // Buzzer state
 volatile static OnOff_t buzzerState = Off;
-
+bool motion;
 /*
  * Task 1: Flash LED
  */
 
 // Callback function for playing the buzzer
+void delay(unsigned int);
 void callbackBuzzerPlay(uint32_t time)                    // the scheduled time
 {
     uint32_t delay = 10;
@@ -52,7 +57,7 @@ void callbackBuzzerPlay(uint32_t time)                    // the scheduled time
         case Off:
             buzzerOn();
             buzzerState = On;
-            delay = 12;                            // on for 12 ms
+            delay = 8;                            // on for 12 ms
             break;
         }
     }
@@ -95,12 +100,34 @@ void pbISR()
     case 2:                     // SW2: Turn off the alarming system
         sysState = Off;
         ledTurnOnOff(false /* red */, false /* blue */, true /* green */);
-        buzzerOff();;
+        buzzerOff();
         break;
     }
 
     // record the time to check for de-bouncing next time
     lastTime = time;
+}
+void motionISR()
+{
+
+    // Last time pushbutton was pushed
+
+        // IMPORTANT: Clear interrupt, otherwise the interrupt handler will be executed forever
+        GPIOIntClear(GPIO_PORTC_BASE, GPIO_PIN_4);
+        motion=motionDetect;
+        if (sysState == On) {
+        //if (motion==1){
+          //  uprintf("Hello\n\r");
+            alarmState = On;
+            ledTurnOnOff(true /* red */, false /* blue */, false /* green */);
+       // }
+       // else{
+           // alarmState = Off;
+         //   ledTurnOnOff(false /* red */, false /* blue */, true /* green */);
+           // }
+
+}
+
 }
 
 
@@ -115,28 +142,45 @@ void intrInit()
                    GPIO_FALLING_EDGE);
     IntPrioritySet(INT_GPIOF, 0); // set interrupt level to 0 (0 is the highest for programmable interrupts)
     GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4); // enable interrupts on SW1 and SW2 input
+
+    GPIOIntRegister(GPIO_PORTC_BASE, motionISR); // register the interrupt handler
+    GPIOIntTypeSet(GPIO_PORTC_BASE, GPIO_PIN_4, // interrupt on falling edge, note that SW1 and SW2 are active low
+                   GPIO_RISING_EDGE);
+    IntPrioritySet(INT_GPIOC, 1); // set interrupt level to 0 (0 is the highest for programmable interrupts)
+    GPIOIntEnable(GPIO_PORTC_BASE, GPIO_PIN_4); // enable interrupts on SW1 and SW2 input
 }
 
 /*
  * The main function
  */
+
+
 int main(void)
 {
     lpInit();
     buzzerInit();
+    motionInit();
     intrInit();
-
+    static uint32_t lastTime = 0;
     // Print out a start message
     uprintf("%s\n\r", "Lab 5 starts");
-
     // Schedule the first callback events
     schdCallback(callbackBuzzerPlay, 1000);
-
+    ledTurnOnOff(false /* red */, false /* blue */, true /* green */);
+    sysState=Off;
     // Run the callback scheduler
     while (true)
     {
-        schdExecute();
 
+        schdExecute();
+        uint32_t time = sysTimeGet();
+        if(time >= lastTime+5000){
+            lastTime=time;
+        if (sysState==On & alarmState==On){
+                alarmState = Off;
+                ledTurnOnOff(false /* red */, false /* blue */, true /* green */);
+                }
+        }
         // Put Tiva C into sleep until the next interrupt happens
         __asm("    wfi");
     }
