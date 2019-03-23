@@ -11,6 +11,8 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main(6).obj" \
+"./pwmbuzzer.obj" \
+"./pwmbuzzer_asm.obj" \
 "./pwmbuzzer_asm_direct.obj" \
 "./pwmled.obj" \
 "./pwmled_asm.obj" \
@@ -162,9 +164,9 @@ Lab7.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main(6).obj" "pwmbuzzer_asm_direct.obj" "pwmled.obj" "pwmled_asm.obj" "ras.obj" "ras_asm.obj" "tm4c123gh6pm_startup_ccs.obj" 
-	-$(RM) "main(6).d" "pwmled.d" "ras.d" "tm4c123gh6pm_startup_ccs.d" 
-	-$(RM) "pwmbuzzer_asm_direct.d" "pwmled_asm.d" "ras_asm.d" 
+	-$(RM) "main(6).obj" "pwmbuzzer.obj" "pwmbuzzer_asm.obj" "pwmbuzzer_asm_direct.obj" "pwmled.obj" "pwmled_asm.obj" "ras.obj" "ras_asm.obj" "tm4c123gh6pm_startup_ccs.obj" 
+	-$(RM) "main(6).d" "pwmbuzzer.d" "pwmled.d" "ras.d" "tm4c123gh6pm_startup_ccs.d" 
+	-$(RM) "pwmbuzzer_asm.d" "pwmbuzzer_asm_direct.d" "pwmled_asm.d" "ras_asm.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

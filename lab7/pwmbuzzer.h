@@ -8,14 +8,12 @@
 
 #ifndef PWMBUZZER_H_
 #define PWMBUZZER_H_
+#include <stdint.h>
 
 // Initialize the buzzer
-void buzzerInit();
-
-// Turn on the buzzer
-void buzzerOn();
+void pwmbuzzerInit();
 
 // Turn off the buzzer
-void buzzerOff();
+void pwmbuzzerSet(int x, int y);
 
 #endif /* PWMBUZZER_H_ */
