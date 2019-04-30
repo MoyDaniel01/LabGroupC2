@@ -151,12 +151,15 @@ void callbackBuzzerPlay(uint32_t time)                    // the scheduled time
 
 static char userinput=0;//note or octave input by user using keyboard
 static uint32_t Oct=4;//starting octave
-static uint32_t play=0;//note to be played in
+static uint32_t play=30000;//note to be played in
 
-scanf("%c",&userinput);
+userinput = uartGetChar();
 
-if (userinput <= 8){
-    Oct=userinput;
+//uprintf("%c\n\r", userinput);
+
+if (userinput <= 56){
+    Oct=userinput-48;
+    uprintf("oct %d \n", Oct);
 }
 if (userinput=='c'){
     play=note[0][Oct];
@@ -197,7 +200,10 @@ else if (userinput=='B'){
 else{
     play=0;
 }
-switch (buzzerState)
+pwmbuzzerSet(play,1000);//sets volume and pitch based on the note pressed and octive active
+delay = 250;
+
+/*switch (buzzerState)
         {
         case On:
             pwmbuzzerSet(0,0);//sets volume and pitch to 0
@@ -210,7 +216,7 @@ switch (buzzerState)
             buzzerState = On;
             delay = 250;
             break;
-    }
+    }*/
 
     // schedule the next callback
     schdCallback(callbackBuzzerPlay, time + delay);
@@ -219,11 +225,14 @@ switch (buzzerState)
 
 void main(void)
 {
+    uartInit();
     lpInit();
     pwmbuzzerInit();
     initNote(note);
     // Schedule the first callback events for LED flashing and push button checking.
     // Those trigger callback chains. The time unit is millisecond.
+
+    uprintf("start\n\r");
 
     schdCallback(callbackBuzzerPlay,1002);
 
