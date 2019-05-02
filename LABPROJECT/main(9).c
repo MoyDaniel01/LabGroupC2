@@ -155,8 +155,6 @@ static uint32_t play=30000;//note to be played in
 
 userinput = uartGetChar();
 
-//uprintf("%c\n\r", userinput);
-
 if (userinput <= 56){
     Oct=userinput-48;
     uprintf("oct %d \n", Oct);
@@ -203,22 +201,6 @@ else{
 pwmbuzzerSet(play,1000);//sets volume and pitch based on the note pressed and octive active
 delay = 250;
 
-/*switch (buzzerState)
-        {
-        case On:
-            pwmbuzzerSet(0,0);//sets volume and pitch to 0
-            buzzerState = Off;
-            delay = 250;
-            break;
-
-        case Off:
-            pwmbuzzerSet(play,1000);//sets volume and pitch based on the note pressed and octive active
-            buzzerState = On;
-            delay = 250;
-            break;
-    }*/
-
-    // schedule the next callback
     schdCallback(callbackBuzzerPlay, time + delay);
 }
 
